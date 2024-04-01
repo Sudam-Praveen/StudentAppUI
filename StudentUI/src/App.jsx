@@ -5,19 +5,25 @@ import './App.css'
 import ListStudentComponent from './components/ListStudentComponent'
 import HeaderComponent from './components/HeaderComponent'
 import FooterComponent from './components/FooterComponent'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div>
-      <HeaderComponent />
+      <Router>
+        <HeaderComponent />
 
-      <div className="container">
-        <ListStudentComponent />
-      </div>
+        <div className="container">
+          <Routes>
+            <Route path='/' element={<ListStudentComponent />}></Route>
+            <Route path='/students' element={<ListStudentComponent />}></Route>
+          </Routes>
+        </div>
 
-      <FooterComponent/>
+        <FooterComponent />
+      </Router>
     </div>
   )
 }
