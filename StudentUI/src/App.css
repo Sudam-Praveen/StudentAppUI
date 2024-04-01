@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+
+/* Adding CSS */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width:80%;
+  height: 50px;
+  background-color: black;
+  text-align: center;
+  color: white;
+}
