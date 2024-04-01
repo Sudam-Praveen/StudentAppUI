@@ -1,53 +1,58 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import StudentService from '../services/StudentService';
+import CreateStudentComponent from './CreateStudentComponent';
+//import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+function ListStudentComponent(props) {
+    const [students, setStudents] = useState([]);
 
-class ListStudentComponent extends Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            students: []
-        }
-    }
+    useEffect(() => {
+        StudentService.getStudents()
+            .then((res) => {
+                setStudents(res.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching students:', error);
+            });
+    }, []);
 
-    componentDidMount(){
-        StudentService.getStudents().then((res)=>{
-            this.setState({students:res.data})
-        })
-    }
 
-    render() {
-        return (
+
+    return (
+        <div>
+            <h2 className="text-center">Student List</h2>
+            <br></br>
             <div>
-                <h2 className="text-center">Student List</h2>
-                <div className="row">
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Student First Name</th>
-                                <th>Student Last Name</th>
-                                <th>Student Email</th>
-                                <th>Option</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.students.map(
-                                    student =>
-                                        <tr key={student.id}>
-                                            <td>{student.firstName}</td>
-                                            <td>{student.lastName}</td>
-                                            <td>{student.email}</td>
-
-                                        </tr>
-                                )
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                <Link to="/add-Student">
+                    <button className="btn btn-primary">Add Student</button>   {/* Adding link to the Addcontact using liknk */}
+                </Link>
             </div>
-        );
-    }
+
+            <br />
+            <div className="row">
+                <table className="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Student First Name</th>
+                            <th>Student Last Name</th>
+                            <th>Student Email</th>
+                            <th>Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {students.map((student) => (
+                            <tr key={student.id}>
+                                <td>{student.firstName}</td>
+                                <td>{student.lastName}</td>
+                                <td>{student.email}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
 }
 
 export default ListStudentComponent;
