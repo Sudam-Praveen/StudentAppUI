@@ -46,3 +46,7 @@
   text-align: center;
   color: white;
 }
+.errorr-msg{
+  font-size: 12px;
+  color: red;
+}
